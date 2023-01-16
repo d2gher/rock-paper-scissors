@@ -1,54 +1,58 @@
-game();
+let winMessage = "You won this round!"
+let loseMessage = "The AI won this round :\"("
+let winningTheGame = "You won! And showed the AI its place! Play again?"
+let losingTheGame = "The AI has won, and took over the world... Play again?"
+let choices = ["rock", "paper", "scissors"]
+let playerScore = 0;
+let computerScore = 0;
 
-function game() {
-    
-    playerScore = 0;
-    computerScore = 0;
+let choiceButtons = document.querySelectorAll(".choiceButton");
+let scoreBox = document.querySelector("#score");
+let message = document.querySelector("#message")
 
-    for (let i = 0; i < 5; i++) {
-        let playerChoice = prompt("Please write either Rock, Paper, Or Scissors:").toLowerCase();
-        let computerChoice = getComputerChoice();
-    
-        console.log(playerChoice);
-        console.log(computerChoice);
-    
-        let result = playRound(playerChoice, computerChoice);
-        console.log(result);
+choiceButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        let roundResult = playRound(button.value ,getComputerChoice());
+        updateScore(roundResult);
 
-        if (result == "Player") playerScore++;
-        else if (result == "Computer") computerScore++;
-    }  
+        if(playerScore == 5) {
+            roundResult = winningTheGame
+            playerScore = 0;
+            computerScore = 0;
+        } else if (computerScore == 5) {
+            roundResult = losingTheGame
+            playerScore = 0;
+            computerScore = 0;
+        }
+        message.textContent = roundResult;
+    })
+})
 
-    if (playerScore > computerScore) console.log("Game Result: The player wins!");
-    else if (playerScore < computerScore) console.log("Game Result: The Computer wins!");
-    else console.log("Game Result: It's a tie...");
+function updateScore(result) {
+    if (result == winMessage || result == loseMessage) {
+        result == winMessage ? playerScore++: computerScore++;
+        scoreBox.textContent = `You ${playerScore} - ${computerScore} The AI`
+    }
 }
 
 function playRound(playerChoice, computerChoice) {
     // decide who wins, or is it a tie, or the player didn't choose right
-    if (playerChoice != "rock" && playerChoice != "paper" && playerChoice != "scissors") return "Please write either Rock, Paper, Or Scissors"
+    if (!choices.includes(playerChoice)) return "Please choose Rock, Paper, Or Scissors"
     if (playerChoice == computerChoice) return "A tie"
-
-    let winMessage = "Player"
-    let loseMessage = "Computer"
 
     switch(playerChoice) {
         case "rock":
             if (computerChoice == "scissors") return winMessage;
             return loseMessage;
-            break;
         case "paper":
             if (computerChoice == "rock") return winMessage;
             return loseMessage;
-            break;
         case "scissors": 
             if (computerChoice == "paper") return winMessage;
             return loseMessage;
-            break;
     }
 }
 
 function getComputerChoice() {
-    let choices = ["rock", "paper", "scissors"]
     return choices[Math.floor(Math.random() * 3)]
 }

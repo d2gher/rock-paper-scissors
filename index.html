@@ -4,10 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="scripts.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
     <title>Rock Paper Scissors</title>
 </head>
 <body>
-    
+    <div class="score_container">
+        <h1>Rock Paper Scissors</h1>
+        <h2>Best of five</h2>
+        <div id="score">You 0 - 0 The AI</div>
+        <p id="message">You are not fighting for yourself<br> You are fighting for <em>the human race</em></p>
+    </div>
+    <div class="buttons_container">
+        <button class="choiceButton" value="rock">Rock</button>
+        <button class="choiceButton" value="paper">Paper</button>
+        <button class="choiceButton" value="scissors">Scissors</button>
+    </div>
 </body>
 </html>
